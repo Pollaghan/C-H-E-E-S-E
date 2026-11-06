@@ -16,6 +16,11 @@ PlayerY = (ResolutionY / 2) - Player.get_height() / 2
 GravityY = 0
 Falling = True
 Jump = False
+# Collision Variables I think
+upperCol = False
+lowerCol = False
+leftCol = False
+rightCol = False
 # Functions n stuff
 def ImageSequence(SequenceFolder,FrameName, Destination, EndFrame):
     Cheese = pygame.image.load(SequenceFolder + "/" + FrameName + "1" + ".png")
@@ -40,6 +45,9 @@ while True :
         # where we now live THIS IS OUR NEW HOME
         screen.blit(Player, ((ResolutionX/2)-Player.get_width()/2,PlayerY))
         PlayerY -= GravityY
+        if lowerCol:
+            Falling = False
+            GravityY = 0
         if Falling:
             GravityY -= 0.01
         for event in pygame.event.get():
