@@ -13,7 +13,9 @@ frame = 1
 Player = pygame.image.load("PLAYER.png")
 Player = pygame.transform.scale(Player, (250, 250))
 PlayerY = (ResolutionY / 2) - Player.get_height() / 2
-GravityY = -1
+GravityY = 0
+Falling = True
+Jump = False
 # Functions n stuff
 def ImageSequence(SequenceFolder,FrameName, Destination, EndFrame):
     Cheese = pygame.image.load(SequenceFolder + "/" + FrameName + "1" + ".png")
@@ -37,9 +39,15 @@ while True :
     else:
         # where we now live THIS IS OUR NEW HOME
         screen.blit(Player, ((ResolutionX/2)-Player.get_width()/2,PlayerY))
-        if PlayerY < 720 :
-            PlayerY -= GravityY
-            GravityY -= 0.1
+        PlayerY -= GravityY
+        if Falling:
+            GravityY -= 0.01
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    Jump = True
+                    GravityY = 1.2
+                    Falling = True
         # bye
     pygame.display.flip()
     for event in pygame.event.get():
